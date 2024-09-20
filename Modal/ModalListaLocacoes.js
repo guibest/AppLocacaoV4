@@ -4,8 +4,8 @@ import { db } from '../firebaseConfig';
 import { collection, getDocs, query, where, updateDoc, doc, deleteDoc } from 'firebase/firestore';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-//import { DatePickerModal } from 'react-native-paper-dates';
-//import '../traudotorCalendar/translation';
+import { DatePickerModal } from 'react-native-paper-dates';
+import '../traudotorCalendar/translation';
 import moment from 'moment';
 
 const ModalListaLocacoes = ({ casa, handleClose }) => {
@@ -96,7 +96,7 @@ const ModalListaLocacoes = ({ casa, handleClose }) => {
             onPress={() => setIsDateRangePickerVisible(true)}
           >
             <Text style={styles.dateInput}>
-              {`${formState.startDate || moment(item.startDate).format('YYYY-MM-DD')} - ${formState.endDate || moment(item.endDate).format('YYYY-MM-DD')}`}
+              {`${formState.startDate || moment(item.startDate).format('DD/MM/YYYY')} - ${formState.endDate || moment(item.endDate).format('DD/MM/YYYY')}`}
             </Text>
             <Icon name="calendar" size={20} color="#000" style={styles.icon} />
           </TouchableOpacity>
@@ -189,7 +189,15 @@ const ModalListaLocacoes = ({ casa, handleClose }) => {
           </View>
         </>
       )}
-
+      <DatePickerModal
+        locale="pt"
+        mode="range"
+        visible={isDateRangePickerVisible}
+        onDismiss={() => setIsDateRangePickerVisible(false)}
+        onConfirm={handleDateRangeChange}
+        startDate={formState.startDate ? moment(formState.startDate, 'YYYY-MM-DD').toDate() : undefined}
+        endDate={formState.endDate ? moment(formState.endDate, 'YYYY-MM-DD').toDate() : undefined}
+      />
     </View>
   );
 

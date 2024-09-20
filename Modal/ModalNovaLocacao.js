@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, KeyboardAvo
 import { db } from '../firebaseConfig';
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import moment from 'moment';
-//import { DatePickerModal } from 'react-native-paper-dates'; // Importando DatePickerModal e registerTranslation
-//import '../traudotorCalendar/translation';
+import { DatePickerModal, registerTranslation } from 'react-native-paper-dates'; // Importando DatePickerModal e registerTranslation
+import '../traudotorCalendar/translation';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Importando fonte de ícones
 
 
@@ -163,13 +163,10 @@ const ModalNovaLocacao = ({ handleClose, onSave, casa }) => {
 
     // Validate the start date field.
     if (!formState.startDate) {
-      newErrors.startDate = 'Selecione a data de início';
+      newErrors.startDate = 'Selecione as datas de início e fim';
     }
 
-    // Validate the end date field.
-    if (!formState.endDate) {
-      newErrors.endDate = 'Selecione a data de término';
-    }
+
 
     // Check if the form is valid.
     const isValid = Object.keys(newErrors).length === 0;
@@ -274,6 +271,17 @@ const ModalNovaLocacao = ({ handleClose, onSave, casa }) => {
           </View>
         </TouchableOpacity>
 
+        {isDateRangePickerVisible && (
+          <DatePickerModal
+            locale="pt" // Definindo o idioma para português
+            mode="range"
+            visible={isDateRangePickerVisible}
+            onDismiss={() => setIsDateRangePickerVisible(false)}
+            onConfirm={handleDateRangeChange}
+            startDate={formState.startDate ? new Date(formState.startDate) : undefined}
+            endDate={formState.endDate ? new Date(formState.endDate) : undefined}
+          />
+        )}
 
         {errorsState.startDate && <Text style={styles.errorText}>{errorsState.startDate}</Text>}
         {errorsState.endDate && <Text style={styles.errorText}>{errorsState.endDate}</Text>}
