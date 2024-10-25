@@ -1,10 +1,10 @@
 // App.js
-import * as React from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './LoginScreen';
-import HomeScreen from './HomeScreen'; // Certifique-se de que HomeScreen está importado
-import CalendarScreen from './CalendariosCasas/CalendarScreen'; // Importando a tela de calendário
+import HomeScreen from './HomeScreen';
+import CalendarScreen from './CalendariosCasas/CalendarScreen'; // Verifique se o caminho está correto
 
 const Stack = createStackNavigator();
 
@@ -15,7 +15,7 @@ const App = () => {
         <Stack.Screen
           name="Login"
           component={LoginScreen}
-          options={{ title: 'Login' }}
+          options={{ title: 'Login', headerShown: false }} // Escondendo o cabeçalho
         />
         <Stack.Screen
           name="Home"

@@ -2,6 +2,10 @@
 
 # dependencies
 node_modules/
+.expo
+.env
+.DS_Store
+
 
 # Expo
 .expo/
@@ -33,3 +37,4 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+

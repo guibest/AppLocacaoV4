@@ -1,4 +1,3 @@
-// LoginScreen.js
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { auth } from './firebaseConfig'; // Verifique se o caminho está correto
@@ -9,8 +8,16 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
+    // Verificar se os campos estão preenchidos
     if (!email || !password) {
-      Alert.alert('Erro', 'Por favor, preencha todos os campos!');
+      Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios!');
+      return;
+    }
+
+    // Verificar se o email é válido
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      Alert.alert('Erro', 'Por favor, insira um email válido!');
       return;
     }
 
@@ -18,7 +25,7 @@ const LoginScreen = ({ navigation }) => {
       await signInWithEmailAndPassword(auth, email, password);
       navigation.navigate('Home'); // Navegar para a tela inicial
     } catch (error) {
-      Alert.alert('Erro', error.message); // Exibir mensagem de erro do Firebase
+      Alert.alert('Erro de Login', error.message); // Exibir mensagem de erro do Firebase
     }
   };
 
@@ -29,6 +36,8 @@ const LoginScreen = ({ navigation }) => {
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
+        autoCapitalize="none" // Para evitar que a primeira letra seja maiúscula
+        keyboardType="email-address" // Para exibir o teclado apropriado
       />
       <TextInput
         style={styles.input}
